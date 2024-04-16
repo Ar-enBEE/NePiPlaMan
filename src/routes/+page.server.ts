@@ -1,6 +1,6 @@
 import db from '$lib/server/Database';
 import { fail } from '@sveltejs/kit';
-import { writeFileSync } from 'fs';
+import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import JSZip from 'jszip';
 
 /**
@@ -38,6 +38,7 @@ export const actions = {
 			});
 		}
 
+		if (!existsSync('newpipeDB')) mkdirSync('newpipeDB');
 		writeFileSync('newpipeDB/newpipe.db', Buffer.from(dbFile));
 		writeFileSync('newpipeDB/newpipe-backup.db', Buffer.from(dbFile));
 		console.log('✅ NewPipe file imported successfully');
